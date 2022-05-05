@@ -1,9 +1,8 @@
-import styles from "../styles/Home.module.css";
 import Image from "next/image";
 import img from "../public/Asset.png";
 import Nav from "../components/Nav";
 
-export default function Home() {
+export default function Landing() {
   return (
     <div className="h-screen w-screen relative bg-secondary text-Poppins">
       <Nav />
@@ -14,14 +13,14 @@ export default function Home() {
           id="svg"
           viewBox="0 0 1440 400"
           xmlns="http://www.w3.org/2000/svg"
-          class="transition duration-300 ease-in-out delay-150"
+          className="transition duration-300 ease-in-out delay-150"
         >
           <path
             d="M 0,400 C 0,400 0,200 0,200 C 172,187.33333333333331 344,174.66666666666666 516,194 C 688,213.33333333333334 860,264.6666666666667 1014,271 C 1168,277.3333333333333 1304,238.66666666666666 1440,200 C 1440,200 1440,400 1440,400 Z"
             stroke="none"
             stroke-width="0"
             fill="#48BBB8"
-            class="transition-all duration-300 ease-in-out delay-150 path-0"
+            className="transition-all duration-300 ease-in-out delay-150 path-0"
           ></path>
         </svg>
       </div>
