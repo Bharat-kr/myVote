@@ -20,7 +20,7 @@ const BallotCard = () => {
           </p>
         </div>
         <div className="flex justify-end mt-4">
-          <a href="#" className="text-xl font-medium text-primary">
+          <a href="/home/sadad" className="text-xl font-medium text-primary">
             View Details
           </a>
         </div>

@@ -14,7 +14,7 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <hr className="mt-6 mx-10 border-2 rounded-sm border-slate-200" />
+      <hr className="mt-6 mx-10 border-2 rounded-sm border-white" />
       <div className="px-10 grid grid-cols-1 md:grid-cols-2  justify-items-center gap-2">
         <BallotCard />
         <BallotCard />

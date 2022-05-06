@@ -18,7 +18,7 @@ export default function Landing() {
           <path
             d="M 0,400 C 0,400 0,200 0,200 C 172,187.33333333333331 344,174.66666666666666 516,194 C 688,213.33333333333334 860,264.6666666666667 1014,271 C 1168,277.3333333333333 1304,238.66666666666666 1440,200 C 1440,200 1440,400 1440,400 Z"
             stroke="none"
-            stroke-width="0"
+            strokeWidth="0"
             fill="#48BBB8"
             className="transition-all duration-300 ease-in-out delay-150 path-0"
           ></path>
@@ -33,9 +33,11 @@ export default function Landing() {
             <br />A new approach to one most important things in
             <br /> our lives with power of Blockchain!
           </p>
-          <button className="p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
-            Connect Wallet
-          </button>
+          <a href="/home">
+            <button className="p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
+              Connect Wallet
+            </button>
+          </a>
         </div>
       </div>
     </div>
