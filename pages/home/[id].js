@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import Participant from "../../components/ballot/Participant";
+import Footer from "../../components/Footer";
 import NavBar from "../../components/Home/NavBar";
-import Modal from "../../components/Modal";
 
 const Index = () => {
   const [voting, setvoting] = useState(false);
@@ -58,6 +58,7 @@ const Index = () => {
           <Participant />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

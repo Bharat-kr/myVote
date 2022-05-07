@@ -1,3 +1,4 @@
+import Footer from "../components/Footer.js";
 import BallotCard from "../components/Home/BallotCard.js";
 import NavBar from "../components/Home/NavBar.js";
 const Home = () => {
@@ -24,6 +25,7 @@ const Home = () => {
           <BallotCard />
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
