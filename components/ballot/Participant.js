@@ -19,7 +19,7 @@ const Participant = () => {
         </p>
         <div className="flex items-center justify-between font-semibold text-sm border-b border-slate-500 "></div>
         <div className="flex text-sm justify-end text-white">
-          <button className="p-2 rounded-xl w-full border border-transparent hover:border-cyan-500 bg-transparent font-bold text-md text-white hover:text-cyan-300 hover:border-transparent transition ease-in duration-200 transform active:translate-y-0">
+          <button className="p-2 rounded-lg w-full border border-transparent hover:border-cyan-500 bg-transparent font-bold text-md text-white hover:text-cyan-300 hover:border-transparent transition ease-in duration-200 transform active:translate-y-0">
             Vote
           </button>
         </div>

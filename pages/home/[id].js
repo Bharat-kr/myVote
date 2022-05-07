@@ -15,12 +15,38 @@ const Index = () => {
             Name of Ballot
           </h1>
           {!voting && (
-            <button className="p-3 rounded-xl px-16 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
-              Start Voting
-            </button>
+            <div className="flex justify-center">
+              <button className="mr-4 p-3 rounded-xl border border-white bg-primary font-bold text-md text-white hover:shadow-lg transition ease-in-out">
+                <svg
+                  width="48"
+                  height="48"
+                  className="w-5 h-5 text-currentColor"
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  stroke="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M24 10V38"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M10 24H38"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <button className="p-3 py-2 rounded-xl px-16 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
+                Start Voting
+              </button>
+            </div>
           )}
           {voting && (
-            <button className="p-3 rounded-xl px-16 bg-red-500 font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
+            <button className="p-3 py-2 rounded-xl px-16 bg-red-500 font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
               End Voting
             </button>
           )}
@@ -52,7 +78,7 @@ const Index = () => {
         <div className="px-10 py-4 flex items-center justify-between w-full">
           <h2 className="text-Poppins font-semibold text-2xl">Participants</h2>
         </div>
-        <div className="px-10 pb-4 grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-3 justify-items-center">
+        <div className="px-10 pb-10 grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-3 justify-items-center">
           <Participant />
           <Participant />
           <Participant />

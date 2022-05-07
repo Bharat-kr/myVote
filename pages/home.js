@@ -11,7 +11,7 @@ const Home = () => {
             All Running Ballots
           </div>
           <div>
-            <button className="p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
+            <button className="p-3 py-2 rounded-xl px-16 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
               Create A Ballot
             </button>
           </div>
@@ -25,7 +25,7 @@ const Home = () => {
           <BallotCard />
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
