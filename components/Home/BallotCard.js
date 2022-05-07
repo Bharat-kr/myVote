@@ -1,7 +1,7 @@
 const BallotCard = () => {
   return (
     <div>
-      <div className="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-12 mt-16">
+      <div className="max-w-md py-4 px-8 bg-white shadow-lg hover:shadow-md transition ease-in delay-50 rounded-lg my-12 mt-16">
         <div className="flex justify-center md:justify-start -mt-16">
           <img
             className="w-20 h-20 object-cover rounded-full border-2 border-primary"

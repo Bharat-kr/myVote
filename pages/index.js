@@ -33,7 +33,7 @@ export default function Landing() {
             <br />A new approach to one most important things in
             <br /> our lives with power of Blockchain!
           </p>
-          <a href="/home">
+          <a href="/home" className="z-50">
             <button className="p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
               Connect Wallet
             </button>
