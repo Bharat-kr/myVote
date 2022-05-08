@@ -22,6 +22,14 @@ contract BallotFactory {
     Ballot is basically a new election between 2 or more candidates
 ***/
 contract Ballot{
+    //Ballot Properties
+    string ballotName;
+    string description;
+
+    //bool to check voting started and finished
+    bool votingStarted = false; //checks if voting has started
+    bool votingFinished = false; //checks if voting has finished
+
     //Person schema
     struct Person {
         string name;
@@ -48,10 +56,6 @@ contract Ballot{
 
     //Votes map 
     Vote[] VotesMap;
-
-    //bool to check voting started and finished
-    bool votingStarted = false; //checks if voting has started
-    bool votingFinished = false; //checks if voting has finished
 
     //constructor function to make a manager 
     constructor(string memory name ,address creator, string memory image){

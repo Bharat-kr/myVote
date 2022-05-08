@@ -1,8 +1,98 @@
 import Image from "next/image";
 import img from "../public/Asset.png";
 import Nav from "../components/Nav";
+import { useState, useEffect } from "react";
+import initWeb3 from "../ethereum/web3";
 
 export default function Landing() {
+  const [web3, setWeb3] = useState(null);
+  const [doneCheckingForMetaMask, setDoneCheckingForMetaMask] = useState(false);
+  const [connected, setConnected] = useState(false);
+  const [connecting, setConnecting] = useState(false);
+  const [isRinkebyChain, setIsRinkebyChain] = useState(false);
+
+  const [manager, setManager] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function initWeb3WithProvider() {
+      if (web3 === null) {
+        if (!cancelled) {
+          setDoneCheckingForMetaMask(false);
+          const web3Instance = await initWeb3();
+          setWeb3(web3Instance);
+
+          // Transactions done in this app must be done on the Rinkeby test network.
+          const chainId = await ethereum.request({ method: "eth_chainId" });
+          if (chainId === "0x4") {
+            setIsRinkebyChain(true);
+          }
+
+          setDoneCheckingForMetaMask(true);
+
+          // if (web3Instance !== null) {
+          //   // Create Contract JS object.
+          //   lotteryContract.current = new web3Instance.eth.Contract(abi, contractAddress);
+
+          //   // Check to see if user is already connected.
+          //   try {
+          //     const accounts = await ethereum.request({ method: "eth_accounts" });
+          //     if (accounts.length > 0 && ethereum.isConnected()) {
+          //       setConnected(true);
+          //     }
+          //   } catch (error) {
+          //     console.error(error);
+          //   }
+
+          //   // Implement `accountsChanged` event handler.
+          //   ethereum.on("accountsChanged", handleAccountsChanged);
+          // }
+        }
+      }
+    }
+
+    initWeb3WithProvider();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // useEffect(() => {
+  //   let cancelled = false;
+
+  //   if (connected) {
+  //     async function handler() {
+  //       const manager = await lotteryContract.current.methods.manager().call();
+  //       if (!cancelled) {
+  //         setManager(manager);
+  //         await updatePlayersListAndBalance();
+  //       }
+  //     }
+  //     handler();
+  //   }
+
+  //   return () => {
+  //     cancelled = true;
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [connected]);
+
+  const getAccount = async (_event) => {
+    setConnecting(true);
+    try {
+      const val = await ethereum.request({ method: "eth_requestAccounts" });
+      console.log(val);
+    } catch (error) {}
+    setConnecting(false);
+  };
+
+  const handleAccountsChanged = (_accounts) => {
+    window.location.reload();
+  };
+
   return (
     <div className="h-screen w-screen relative bg-secondary text-Poppins">
       <Nav />
@@ -33,11 +123,15 @@ export default function Landing() {
             <br />A new approach to one most important things in
             <br /> our lives with power of Blockchain!
           </p>
-          <a href="/home" className="z-50">
-            <button className="p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
-              Connect Wallet
-            </button>
-          </a>
+          {/* <a href="/home" className="z-50"> */}
+          <button
+            className="p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out z-50"
+            onClick={getAccount}
+            disabled={connecting}
+          >
+            Connect Wallet
+          </button>
+          {/* </a> */}
         </div>
       </div>
     </div>
