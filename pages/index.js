@@ -7,8 +7,8 @@ import { useEffect } from "react";
 
 export default function Landing() {
   const { connecting, setConnecting, account, setAccount } = useWeb3();
-  console.log("acc", account);
   const router = useRouter();
+
   useEffect(() => {
     if (account !== "undefined" && account !== null) {
       router.push("/home");
