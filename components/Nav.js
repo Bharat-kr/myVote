@@ -1,4 +1,5 @@
 const Nav = () => {
+  
   return (
     <nav className="list-none flex h-20 bg-primary w-full justify-between items-center p-10 rounded-b-2xl shadow-md">
       <li className="font-bold text-3xl text-white">MYVOTE</li>
