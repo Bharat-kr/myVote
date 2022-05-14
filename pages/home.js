@@ -1,7 +1,18 @@
+import { useEffect } from "react";
 import Footer from "../components/Footer.js";
 import BallotCard from "../components/Home/BallotCard.js";
 import NavBar from "../components/Home/NavBar.js";
+import { useWeb3 } from "../context/Web3Context.js";
+import { useRouter } from "next/router";
+
 const Home = () => {
+  const { account } = useWeb3();
+  const router = useRouter();
+  useEffect(() => {
+    if (account === "undefined" || account === null) {
+      router.push("/");
+    }
+  }, [account]);
   return (
     <div className="w-full flex flex-col items-center">
       <NavBar />

@@ -2,17 +2,25 @@ import Image from "next/image";
 import img from "../public/Asset.png";
 import Nav from "../components/Nav";
 import { useWeb3 } from "../context/Web3Context";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Landing() {
-  const { connecting, setConnecting, account  } = useWeb3();
+  const { connecting, setConnecting, account, setAccount } = useWeb3();
   console.log("acc", account);
-  // const {ethereum } = window;
+  const router = useRouter();
+  useEffect(() => {
+    if (account !== "undefined" && account !== null) {
+      router.push("/home");
+    }
+  }, [account]);
 
   const getAccount = async (_event) => {
     setConnecting(true);
     try {
       const val = await ethereum.request({ method: "eth_requestAccounts" });
       console.log(val);
+      setAccount(val[0]);
     } catch (error) {}
     setConnecting(false);
   };

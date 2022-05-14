@@ -86,7 +86,8 @@ export const Web3Provider = ({ children }) => {
         setDoneCheckingForMetaMask,
         setIsRinkebyChain,
         setWeb3,
-        account
+        account,
+        setAccount,
       }}
     >
       {children}
