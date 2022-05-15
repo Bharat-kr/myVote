@@ -1,5 +1,4 @@
 import { useWeb3 } from "../context/Web3Context";
-
 const Nav = () => {
   const { connecting, setConnecting, setAccount } = useWeb3();
 
