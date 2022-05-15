@@ -71,7 +71,7 @@ export const Web3Provider = ({ children }) => {
     };
 
     init();
-  }, [web3]);
+  }, []);
 
   return (
     <Web3Context.Provider

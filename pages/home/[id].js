@@ -1,23 +1,12 @@
 import React from "react";
-import { useState , useEffect } from "react";
+import { useState} from "react";
 import Participant from "../../components/ballot/Participant";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/Home/NavBar";
-import { useWeb3 } from "../../context/Web3Context";
-import { useRouter } from "next/router";
 
-
-const Index = () => {
+const Election = () => {
   const [voting, setvoting] = useState(false);
-  const {  account } = useWeb3();
-  const router = useRouter();
 
-
-  useEffect(() => {
-    if (account === "undefined" || account === null) {
-      router.push("/");
-    }
-  }, [account]);
   return (
     <div className="w-full flex flex-col items-center">
       <NavBar />
@@ -101,4 +90,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Election;
