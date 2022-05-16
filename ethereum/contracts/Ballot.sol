@@ -40,6 +40,7 @@ contract Ballot{
     //Vote schema
     struct Vote {
         address voterId;
+        string aadharId;
         string name;
         address votedTo;
     }
@@ -56,6 +57,9 @@ contract Ballot{
 
     //Votes map 
     Vote[] VotesMap;
+
+    //aadhar ids who have voted
+    mapping(string => bool) public votedPeoples;
 
     //constructor function to make a manager 
     constructor(string memory name ,address creator, string memory image){
@@ -94,12 +98,14 @@ contract Ballot{
     }
 
     //function to vote a participant
-    function vote(string memory name ,address participant) public payable canVote{
-        require(msg.value > 0.50 ether);
+    function vote(string memory name ,address participant , string memory aadhar) public payable canVote{
+        require(!votedPeoples[aadhar]  , "You have already Voted!");
+        require(msg.value >= 0.50 ether , "Send at least 0.50 ether!");
 
         Vote memory val ;
         val.name = name;
         val.voterId = msg.sender;
+        val.aadharId = aadhar;
         val.votedTo = participant;
         VotesMap.push(val);
         //inc the no. of votes of a participant
@@ -109,6 +115,7 @@ contract Ballot{
                 break;
             }
         }
+        votedPeoples[aadhar] = true;
     }
 
     //to start voting in a ballot
