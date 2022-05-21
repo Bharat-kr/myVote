@@ -1,21 +1,22 @@
-const Participant = () => {
+const Participant = ({ val }) => {
+  console.log(val);
   return (
     <div className="card bg-[#15263F] w-80 h-auto rounded-xl p-6 space-y-4">
       <a href="#">
         <img
           className="w-full h-64 rounded-md transition hover:bg-cyan-300"
-          src="https://images.unsplash.com/photo-1635002962487-2c1d4d2f63c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZGlnaXRhbCUyMGFydHxlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60"
+          src={val.image}
           alt=""
         />
       </a>
       <div id="description" className="space-y-4">
         <a href="#">
           <h2 className="text-white font-semibold text-xl transition hover:text-cyan-300">
-            Equilibrium #3429
+            {val.name}
           </h2>
         </a>
-        <p className="text-slate-500 text-sm select-none">
-          Our Equilibrium collection promotes balance and calm.
+        <p className="text-slate-500 text-sm select-none w-full truncate">
+          {val.id}
         </p>
         <div className="flex items-center justify-between font-semibold text-sm border-b border-slate-500 "></div>
         <div className="flex text-sm justify-end text-white">
