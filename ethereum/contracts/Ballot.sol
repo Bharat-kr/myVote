@@ -23,12 +23,12 @@ contract BallotFactory {
 ***/
 contract Ballot{
     //Ballot Properties
-    string ballotName;
-    string description;
+    string public ballotName;
+    string public description;
 
     //bool to check voting started and finished
-    bool votingStarted = false; //checks if voting has started
-    bool votingFinished = false; //checks if voting has finished
+    bool public votingStarted = false; //checks if voting has started
+    bool public votingFinished = false; //checks if voting has finished
 
     //Person schema
     struct Person {
@@ -53,7 +53,7 @@ contract Ballot{
     Person[] public participants;
 
     //total no of voters
-    uint256 totalNoOfVoters;
+    uint256 public totalNoOfVoters;
 
     //Votes map 
     Vote[] VotesMap;

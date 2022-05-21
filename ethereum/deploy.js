@@ -30,4 +30,4 @@ const deploy = async () => {
 
 deploy();
 //deployed factory address
-//0x3449BA226483423F9Fe703A4Fdd0e80993D91798
+//0x147f5F03146A09e91A93D655d0027bF66831051a
