@@ -8,8 +8,8 @@ pragma solidity >=0.5.0 <0.9.0;
 contract BallotFactory {
     Ballot[] public deployedBallots;
 
-    function createBallot(string memory name , string memory image) public {
-        Ballot newBallot = new Ballot(name, msg.sender , image);
+    function createBallot(string memory creator , string memory image , string memory nameOfBallot , string memory description) public {
+        Ballot newBallot = new Ballot(creator, msg.sender , image , nameOfBallot , description);
         deployedBallots.push(newBallot);
     }
 
@@ -62,11 +62,13 @@ contract Ballot{
     mapping(string => bool) public votedPeoples;
 
     //constructor function to make a manager 
-    constructor(string memory name ,address creator, string memory image){
-        manager.name = name;
-        manager.id = creator;
+    constructor(string memory creator ,address creatorId, string memory image , string memory nameOfBallot ,string memory desc){
+        manager.name = creator;
+        manager.id = creatorId;
         manager.image = image;
         manager.votes = 0;
+        ballotName = nameOfBallot;
+        description = desc;
     }
 
     modifier onlyManager(){
