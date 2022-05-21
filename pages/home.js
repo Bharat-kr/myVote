@@ -44,6 +44,9 @@ const Home = () => {
           {onGoingBallots.map((value, idx) => {
             return <BallotCard key={idx} id={value} />;
           })}
+          {onGoingBallots.length === 0 && (
+            <h1 className="m-3 text-lg font-medium">Currently there are no ongoing ballots!</h1>
+          )}
         </div>
       </div>
       <Footer />
