@@ -5,7 +5,9 @@ const NavBar = () => {
   const { account } = useWeb3();
   return (
     <nav className="sticky top-0 left-0 list-none flex h-20 bg-primary w-full justify-between items-center p-10 rounded-b-2xl shadow-md">
-      <li className="font-bold text-3xl text-white">MYVOTE</li>
+      <li className="font-bold text-3xl text-white">
+        <a href="/home">MYVOTE</a>
+      </li>
       <li className="flex">
         <div className="p-2 mr-2 rounded-xl border border-white bg-primary font-medium text-md text-white truncate w-24 sm:w-32 md:w-36 lg:w-auto">
           {account}
