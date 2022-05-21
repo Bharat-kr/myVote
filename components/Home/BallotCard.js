@@ -1,4 +1,5 @@
-const BallotCard = () => {
+const BallotCard = ({ id }) => {
+  console.log(id);
   return (
     <div>
       <div className="max-w-md py-4 px-8 bg-white shadow-lg hover:shadow-md transition ease-in delay-50 rounded-lg my-12 mt-16">

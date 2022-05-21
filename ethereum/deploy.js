@@ -1,25 +1,33 @@
+// Load environment variables.
+require("dotenv").config();
+
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require("web3");
-const { abi, bytecode } = require("./compile");
+const compiledFactory = require("./build/BallotFactory.json");
+const mnemonicPhrase = process.env.ACCOUNT_MNEMONIC;
+const network = process.env.RINKEBY_ENDPOINT;
 
-const provider = new HDWalletProvider(
-  "fit crumble camp income patient swim split picture lumber naive suggest ensure",
-  "https://rinkeby.infura.io/v3/7e89bf1f980e4f17acb9e26168da8701"
-);
+const provider = new HDWalletProvider({
+  mnemonic: {
+    phrase: mnemonicPhrase,
+  },
+  providerOrUrl: network,
+});
+
 const web3 = new Web3(provider);
 
 const deploy = async () => {
-  const accounts = web3.eth.getAccounts();
+  const accounts = await web3.eth.getAccounts();
+  console.log("Attempting to deploy from account", accounts[0]);
 
-  console.log("attempting to deploy from account", accounts[0]);
+  const result = await new web3.eth.Contract(compiledFactory.abi)
+    .deploy({ data: "0x" + compiledFactory.evm.bytecode.object })
+    .send({ from: accounts[0] });
 
-  const result = await new web3.eth.Contract(abi)
-    .deploy({
-      data: bytecode,
-    })
-    .send({ gas: "10000000", from: accounts[0] });
-
-  console.log("Contract successfully deployed to", result.options.address);
+  console.log("Contract deployed to", result.options.address);
   provider.engine.stop();
 };
+
 deploy();
+//deployed factory address
+//0xC32bEA29CF56f967adD952490AD87ED8a7805341

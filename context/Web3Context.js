@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import initWeb3 from "../ethereum/web3";
+import BallotFactory from "../ethereum/build/BallotFactory.json";
 
 const Web3Context = createContext();
 
@@ -10,6 +11,7 @@ export const Web3Provider = ({ children }) => {
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const [isRinkebyChain, setIsRinkebyChain] = useState(false);
+  const [factory, setFactory] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -39,25 +41,16 @@ export const Web3Provider = ({ children }) => {
     };
   }, [connected]);
 
-  // useEffect(() => {
-  //   let cancelled = false;
+  useEffect(() => {
+    if (web3) {
+      var instance = new web3.eth.Contract(
+        BallotFactory.abi,
+        "0xC32bEA29CF56f967adD952490AD87ED8a7805341" //deployed factory code
+      );
+      setFactory(instance);
+    }
+  }, [web3]);
 
-  //   if (connected) {
-  //     async function handler() {
-  //       const manager = await lotteryContract.current.methods.manager().call();
-  //       if (!cancelled) {
-  //         setManager(manager);
-  //         await updatePlayersListAndBalance();
-  //       }
-  //     }
-  //     handler();
-  //   }
-
-  //   return () => {
-  //     cancelled = true;
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [connected]);
   useEffect(() => {
     const init = async () => {
       try {
@@ -88,6 +81,7 @@ export const Web3Provider = ({ children }) => {
         setWeb3,
         account,
         setAccount,
+        factory,
       }}
     >
       {children}
