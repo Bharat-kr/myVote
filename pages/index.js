@@ -5,6 +5,7 @@ import { useWeb3 } from "../context/Web3Context";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Loader from "../components/Loader";
+import Head from "next/head";
 
 export default function Landing() {
   const { connecting, setConnecting, account, setAccount } = useWeb3();
@@ -32,6 +33,10 @@ export default function Landing() {
 
   return (
     <>
+       <Head>
+        <title>MYVOTE</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       {connecting ? (
         <div className="h-screen w-screen flex items-center justify-center">
           <Loader />

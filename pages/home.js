@@ -4,6 +4,7 @@ import BallotCard from "../components/Home/BallotCard.js";
 import NavBar from "../components/Home/NavBar.js";
 import { useWeb3 } from "../context/Web3Context.js";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const Home = () => {
   const { account, factory } = useWeb3();
@@ -27,6 +28,10 @@ const Home = () => {
 
   return (
     <div className="w-full flex flex-col items-center">
+     <Head>
+        <title>MYVOTE</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <NavBar />
       <div className="w-11/12 shadow-2xl mb-6 rounded-b-xl">
         <div className="px-10 pt-4 flex items-center justify-between w-full">

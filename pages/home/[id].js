@@ -7,6 +7,7 @@ import { useWeb3 } from "../../context/Web3Context";
 import { getAllDetails } from "../../utils/ballot";
 import Ballot from "../../ethereum/build/Ballot.json";
 import Loader from "../../components/Loader";
+import Head from "next/head";
 
 const Election = () => {
   const router = useRouter();
@@ -31,6 +32,10 @@ const Election = () => {
 
   return (
     <div className="w-full flex flex-col items-center">
+      <Head>
+        <title>MYVOTE</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <NavBar />
       {loading && (
         <div className="grow w-full h-96 flex items-center justify-center">
@@ -100,7 +105,14 @@ const Election = () => {
           </div>
           <div className="px-10 pb-10 grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-3 justify-items-center">
             {details.participants.map((val, idx) => {
-              return <Participant key={idx} val={val} />;
+              return (
+                <Participant
+                  key={idx}
+                  val={val}
+                  votingStarted={details.votingStarted}
+                  votingEnded={details.votingEnded}
+                />
+              );
             })}
           </div>
         </div>
