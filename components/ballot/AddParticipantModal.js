@@ -1,27 +1,21 @@
 import React, { useState } from "react";
-import { useWeb3 } from "../context/Web3Context";
+import { useWeb3 } from "../../context/Web3Context";
 
-const CreateBallotModal = ({ open, setOpen }) => {
-  const { factory, account } = useWeb3();
+const AddParticipantModal = ({ open, setOpen, instance }) => {
+  const { web3, account } = useWeb3();
   const [loading, setLoading] = useState(false);
   const handleCreateBallot = async (e) => {
     e.preventDefault();
-    console.log(
-      e.target[0].value,
-      e.target[1].value,
-      e.target[2].value,
-      e.target[3].value
-    );
+    console.log(e.target[0].value, e.target[1].value, e.target[2].value);
     setLoading(true);
-    const res = await factory.methods
-      .createBallot(
-        e.target[1].value, //name of creator
-        e.target[2].value, //Creator image
-        e.target[0].value, //name of ballot
-        e.target[3].value //ballot description
-      )
-      .send({
+    const res = await instance.methods
+      .addParticipant(
+        e.target[0].value, //name of participant
+        e.target[1].value, //hash id of participant
+        e.target[2].value //oarticipant image
+      ).send({
         from: account,
+        value: web3.utils.toWei("0.1", "ether"),
       });
     setLoading(false);
     setOpen(false);
@@ -48,7 +42,7 @@ const CreateBallotModal = ({ open, setOpen }) => {
       >
         <div className="flex items-center justify-between space-x-4 w-full">
           <h1 className="text-xl font-medium text-gray-800 ">
-            Create a new Ballot
+            Add a new Participant
           </h1>
           <button
             className="text-gray-600 focus:outline-none hover:text-gray-700"
@@ -73,26 +67,12 @@ const CreateBallotModal = ({ open, setOpen }) => {
           </button>
         </div>
         <form className="mt-5 w-full" onSubmit={handleCreateBallot}>
-          <div className="w-full">
-            <label
-              htmlFor="Ballot Name"
-              className="block text-sm text-gray-700 capitalize w-full"
-            >
-              Name of Ballot
-            </label>
-            <input
-              placeholder="Election 1"
-              type="text"
-              id="Ballot Name"
-              className="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40"
-            />
-          </div>
-          <div className="mt-4">
+          <div>
             <label
               htmlFor="Name"
               className="block text-sm text-gray-700 capitalize"
             >
-              Your name
+              Name
             </label>
             <input
               placeholder="Jhon Doe"
@@ -103,29 +83,29 @@ const CreateBallotModal = ({ open, setOpen }) => {
           </div>
           <div className="mt-4">
             <label
-              htmlFor="Image"
+              htmlFor="ID"
               className="block text-sm text-gray-700 capitalize"
             >
-              Your image
+              Hash address of Participant
             </label>
             <input
-              placeholder="Paste link here"
+              placeholder="0x4......"
               type="text"
-              id="Image"
+              id="ID"
               className="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40"
             />
           </div>
           <div className="mt-4">
             <label
-              htmlFor="description"
+              htmlFor="Image"
               className="block text-sm text-gray-700 capitalize"
             >
-              Ballot Description
+              Image
             </label>
-            <textarea
-              placeholder="Describe Your Ballot"
+            <input
+              placeholder="Paste link here"
               type="text"
-              id="description"
+              id="Image"
               className="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40"
             />
           </div>
@@ -146,7 +126,7 @@ const CreateBallotModal = ({ open, setOpen }) => {
               disabled={loading}
               type="submit"
             >
-              {!loading && "Create"}
+              {!loading && "Add"}
               {loading && (
                 <>
                   <svg
@@ -180,4 +160,4 @@ const CreateBallotModal = ({ open, setOpen }) => {
   );
 };
 
-export default CreateBallotModal;
+export default AddParticipantModal;

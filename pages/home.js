@@ -5,7 +5,7 @@ import NavBar from "../components/Home/NavBar.js";
 import { useWeb3 } from "../context/Web3Context.js";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import CreateBallotModal from "../components/CreateBallotModal.js";
+import CreateBallotModal from "../components/ballot/CreateBallotModal";
 
 const Home = () => {
   const { account, factory } = useWeb3();

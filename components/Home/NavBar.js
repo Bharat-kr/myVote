@@ -1,10 +1,9 @@
 import { useWeb3 } from "../../context/Web3Context";
-import CreateBallotModal from "../CreateBallotModal";
+import CreateBallotModal from "../ballot/CreateBallotModal";
 import { useState } from "react";
 
 const NavBar = () => {
   const { account } = useWeb3();
-
   const [open, setOpen] = useState(false);
 
   return (
