@@ -1,6 +1,5 @@
 import { useWeb3 } from "../../context/Web3Context";
-import Loader from "../Loader";
-import Modal from "../Modal";
+import CreateBallotModal from "../CreateBallotModal";
 import { useState } from "react";
 
 const NavBar = () => {
@@ -49,7 +48,7 @@ const NavBar = () => {
           </button>
         </li>
       </nav>
-      <Modal open={open} setOpen={setOpen} />
+      <CreateBallotModal open={open} setOpen={setOpen} />
     </>
   );
 };

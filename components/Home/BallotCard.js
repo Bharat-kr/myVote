@@ -36,7 +36,7 @@ const BallotCard = ({ id }) => {
               <h2 className="text-gray-800 text-3xl font-semibold">
                 {details?.name}
               </h2>
-              <p className="mt-2 text-gray-600">{details?.description}</p>
+              <p className="mt-2 text-gray-600 line-clamp-3">{details?.description}</p>
             </div>
             <div className="flex justify-end mt-4">
               <a

@@ -5,7 +5,7 @@ import NavBar from "../components/Home/NavBar.js";
 import { useWeb3 } from "../context/Web3Context.js";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Modal from "../components/Modal.js";
+import CreateBallotModal from "../components/CreateBallotModal.js";
 
 const Home = () => {
   const { account, factory } = useWeb3();
@@ -66,7 +66,7 @@ const Home = () => {
         </div>
         <Footer />
       </div>
-      <Modal open={open} setOpen={setOpen} />
+      <CreateBallotModal open={open} setOpen={setOpen} />
     </>
   );
 };
