@@ -23,7 +23,7 @@ const BallotCard = ({ id }) => {
   return (
     <div>
       <div className="max-w-md py-4 px-8 bg-white shadow-lg hover:shadow-md transition ease-in delay-50 rounded-lg my-12 mt-16">
-        {loading && <Loader/>}
+        {loading && <div className="p-4"><Loader/></div>}
         {!loading && (
           <>
             <div className="flex justify-center md:justify-start -mt-16">
