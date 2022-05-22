@@ -83,7 +83,7 @@ contract Ballot{
 
     //Adding a participant in a ballot
     function addParticipant(string memory name ,address id , string memory image) public payable onlyManager{
-        require(msg.value > 0.90 ether);
+        require(msg.value > 0.09 ether);
         Person memory r ;
         r.name = name;
         r.id = id;

@@ -45,7 +45,7 @@ export const Web3Provider = ({ children }) => {
     if (web3) {
       var instance = new web3.eth.Contract(
         BallotFactory.abi,
-        "0x147f5F03146A09e91A93D655d0027bF66831051a" //deployed factory code
+        "0x8Bc88D35312Fe9F0adBf78900c3b296974f25C7F" //deployed factory code
       );
       setFactory(instance);
     }
