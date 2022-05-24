@@ -1,5 +1,4 @@
 const Participant = ({ val, votingStarted, votingEnded }) => {
-  console.log(val);
   return (
     <div className="card bg-[#15263F] w-80 h-auto rounded-xl p-6 space-y-4">
       <a href="#">

@@ -12,36 +12,62 @@ import AddParticipantModal from "../../components/ballot/AddParticipantModal";
 
 const Election = () => {
   const router = useRouter();
-  const { web3 } = useWeb3();
+  const { web3, account } = useWeb3();
   const [details, setDetails] = useState({});
   const [loading, setLoading] = useState(true);
+  const [buttonLoader, setButtonLoader] = useState(false);
+  const [isManager, setIsManager] = useState(false);
   const [open, setOpen] = useState(false);
   const [BallotInstance, setBallotInstance] = useState(null);
 
   useEffect(() => {
     const init = async () => {
-      if (web3) {
+      if (web3 && account) {
         if (router.query.id) {
           setLoading(true);
           var instance = new web3.eth.Contract(Ballot.abi, router.query.id);
           setBallotInstance(instance);
           let res = await getAllDetails(instance);
           setDetails(res);
+          if (account.toLowerCase() == res.manager.id.toLowerCase()) {
+            setIsManager(true);
+          }
           setLoading(false);
         }
       }
     };
     init();
-  }, [web3, router.query.id]);
+  }, [web3, router.query.id, account]);
+
+  const startVoting = async () => {
+    setButtonLoader(true);
+    await BallotInstance.methods.startVoting().send({
+      from: account,
+    });
+    let res = await getAllDetails(BallotInstance);
+    setDetails(res);
+    setButtonLoader(false);
+  };
+  const endVoting = async () => {
+    setButtonLoader(true);
+    await BallotInstance.methods.finishVoting().send({
+      from: account,
+    });
+    let res = await getAllDetails(BallotInstance);
+    setDetails(res);
+    setButtonLoader(false);
+  };
 
   return (
     <>
       <div className="w-full flex flex-col items-center">
+        {/* meta name for page */}
         <Head>
           <title>MYVOTE</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
         <NavBar />
+        {/* page loader */}
         {loading && (
           <div className="grow w-full h-96 flex items-center justify-center">
             <Loader />
@@ -53,7 +79,7 @@ const Election = () => {
               <h1 className="text-Poppins font-semibold text-2xl">
                 {details.name}
               </h1>
-              {!details?.votingStarted && !details.votingEnded && (
+              {isManager && !details?.votingStarted && !details.votingEnded && (
                 <div className="flex justify-center">
                   <button
                     className="mr-4 p-3 rounded-xl border border-white bg-primary font-bold text-md text-white hover:shadow-lg transition ease-in-out"
@@ -84,15 +110,90 @@ const Election = () => {
                       />
                     </svg>
                   </button>
-                  <button className="p-3 py-2 rounded-xl px-16 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
-                    Start Voting
+                  <button
+                    className="p-3 py-2 rounded-xl px-16 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out flex items-center justify-center"
+                    disabled={buttonLoader}
+                    onClick={startVoting}
+                  >
+                    {!buttonLoader && "Start Voting"}
+                    {buttonLoader && (
+                      <>
+                        <svg
+                          className="mr-2 h-5 w-5 animate-spin text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        <span> Processing... </span>
+                      </>
+                    )}
                   </button>
                 </div>
               )}
-              {details?.votingStarted && (
-                <button className="p-3 py-2 rounded-xl px-16 bg-red-500 font-bold text-lg text-white hover:shadow-lg transition ease-in-out">
-                  End Voting
+              {isManager && details?.votingStarted && (
+                <button
+                  className="p-3 py-2 rounded-xl px-16 bg-red-500 font-bold text-lg text-white hover:shadow-lg transition ease-in-out flex items-center justify-center"
+                  disabled={buttonLoader}
+                  onClick={startVoting}
+                >
+                  {!buttonLoader && "End Voting"}
+                  {buttonLoader && (
+                    <>
+                      <svg
+                        className="mr-2 h-5 w-5 animate-spin text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      <span> Processing... </span>
+                    </>
+                  )}
                 </button>
+              )}
+              {!isManager &&
+                !details?.votingStarted &&
+                !details.votingEnded && (
+                  <h5 className="text-primary underline">
+                    Voting Yet To Start
+                  </h5>
+                )}
+              {!isManager && !details?.votingEnded && (
+                <h5 className="text-primary underline font-medium">
+                  Voting Started
+                </h5>
+              )}
+              {!isManager && details?.votingEnded && (
+                <h5 className="text-red-500 underline font-medium">
+                  Voting Ended
+                </h5>
               )}
             </div>
             <hr className="mt-6 mx-10 border-2 rounded-sm border-slate-100" />
@@ -129,7 +230,11 @@ const Election = () => {
         )}
         <Footer />
       </div>
-      <AddParticipantModal open={open} setOpen={setOpen} instance={BallotInstance} />
+      <AddParticipantModal
+        open={open}
+        setOpen={setOpen}
+        instance={BallotInstance}
+      />
     </>
   );
 };
