@@ -13,9 +13,10 @@ const AddParticipantModal = ({ open, setOpen, instance }) => {
         e.target[0].value, //name of participant
         e.target[1].value, //hash id of participant
         e.target[2].value //oarticipant image
-      ).send({
+      )
+      .send({
         from: account,
-        value: web3.utils.toWei("0.1", "ether"),
+        value: web3.utils.toWei("0.011", "ether"),
       });
     setLoading(false);
     setOpen(false);

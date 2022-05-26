@@ -30,6 +30,7 @@ const Election = () => {
           setBallotInstance(instance);
           //getting all the details of the ballot
           let res = await getAllDetails(instance);
+          console.log(res);
           setDetails(res);
           if (account.toLowerCase() == res.manager.id.toLowerCase()) {
             setIsManager(true);
@@ -84,7 +85,7 @@ const Election = () => {
               <h1 className="text-Poppins font-semibold text-2xl">
                 {details.name}
               </h1>
-              {isManager && !details?.votingStarted && !details.votingEnded && (
+              {isManager && !details?.votingStarted && !details.votingFinished && (
                 <div className="flex justify-center">
                   <button
                     className="mr-4 p-3 rounded-xl border border-white bg-primary font-bold text-md text-white hover:shadow-lg transition ease-in-out"
@@ -149,11 +150,11 @@ const Election = () => {
                   </button>
                 </div>
               )}
-              {isManager && details?.votingStarted && (
+              {isManager && details?.votingStarted && !details?.votingFinished && (
                 <button
                   className="p-3 py-2 rounded-xl px-16 bg-red-500 font-bold text-lg text-white hover:shadow-lg transition ease-in-out flex items-center justify-center"
                   disabled={buttonLoader}
-                  onClick={startVoting}
+                  onClick={endVoting}
                 >
                   {!buttonLoader && "End Voting"}
                   {buttonLoader && (
@@ -185,17 +186,19 @@ const Election = () => {
               )}
               {!isManager &&
                 !details?.votingStarted &&
-                !details.votingEnded && (
+                !details.votingFinished && (
                   <h5 className="text-primary underline">
                     Voting Yet To Start
                   </h5>
                 )}
-              {!isManager && !details?.votingEnded && (
-                <h5 className="text-primary underline font-medium">
-                  Voting Started
-                </h5>
-              )}
-              {!isManager && details?.votingEnded && (
+              {!isManager &&
+                details?.votingStarted &&
+                !details?.votingFinished && (
+                  <h5 className="text-primary underline font-medium">
+                    Voting Started
+                  </h5>
+                )}
+              {!isManager && details?.votingFinished && (
                 <h5 className="text-red-500 underline font-medium">
                   Voting Ended
                 </h5>
@@ -220,13 +223,14 @@ const Election = () => {
               </h2>
             </div>
             <div className="px-10 pb-10 grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-3 justify-items-center">
-              {details.participants.map((val, idx) => {
+              {details.participants.map((participant, idx) => {
                 return (
                   <Participant
                     key={idx}
-                    val={val}
+                    participant={participant}
                     votingStarted={details.votingStarted}
-                    votingEnded={details.votingEnded}
+                    votingEnded={details.votingFinished}
+                    instance={BallotInstance}
                   />
                 );
               })}
