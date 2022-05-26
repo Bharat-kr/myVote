@@ -83,7 +83,7 @@ contract Ballot{
 
     //Adding a participant in a ballot
     function addParticipant(string memory name ,address id , string memory image) public payable onlyManager{
-        require(msg.value > 0.09 ether);
+        require(msg.value > 0.01 ether);
         Person memory r ;
         r.name = name;
         r.id = id;
@@ -102,7 +102,7 @@ contract Ballot{
     //function to vote a participant
     function vote(string memory name ,address participant , string memory aadhar) public payable canVote{
         require(!votedPeoples[aadhar]  , "You have already Voted!");
-        require(msg.value >= 0.50 ether , "Send at least 0.50 ether!");
+        require(msg.value >= 0.005 ether , "Send at least 0.50 ether!");
 
         Vote memory val ;
         val.name = name;
