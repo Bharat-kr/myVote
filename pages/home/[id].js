@@ -25,8 +25,10 @@ const Election = () => {
       if (web3 && account) {
         if (router.query.id) {
           setLoading(true);
+          //creating a instance of current ballot
           var instance = new web3.eth.Contract(Ballot.abi, router.query.id);
           setBallotInstance(instance);
+          //getting all the details of the ballot
           let res = await getAllDetails(instance);
           setDetails(res);
           if (account.toLowerCase() == res.manager.id.toLowerCase()) {
@@ -39,6 +41,7 @@ const Election = () => {
     init();
   }, [web3, router.query.id, account]);
 
+  //Start voting for a ballot
   const startVoting = async () => {
     setButtonLoader(true);
     await BallotInstance.methods.startVoting().send({
@@ -48,6 +51,8 @@ const Election = () => {
     setDetails(res);
     setButtonLoader(false);
   };
+
+  //end voting for a ballot
   const endVoting = async () => {
     setButtonLoader(true);
     await BallotInstance.methods.finishVoting().send({

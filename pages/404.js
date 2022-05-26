@@ -10,7 +10,7 @@ const Index = () => {
       }}
     >
       <svg
-        className="h-5/6"
+        className="h-5/6 w-full"
         viewBox="0 0 883 775"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
