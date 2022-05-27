@@ -14,7 +14,6 @@ const BallotCard = ({ id }) => {
         let res = await getDetails(web3, id);
         setDetails(res);
         setLoading(false);
-        console.log(res);
       }
     };
     init();

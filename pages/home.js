@@ -12,19 +12,23 @@ const Home = () => {
   const [onGoingBallots, setOngoingBallots] = useState([]);
   const [open, setOpen] = useState(false);
   const router = useRouter();
+
+  //checking where this page should be possible or not
   useEffect(() => {
     if (account === "undefined" || account === null) {
       router.push("/");
     }
   }, [account]);
 
+  //fetching all ballots
+  const init = async () => {
+    console.log("called");
+    if (factory) {
+      const ballots = await factory.methods.getDeployedBallots().call();
+      setOngoingBallots(ballots);
+    }
+  };
   useEffect(() => {
-    const init = async () => {
-      if (factory) {
-        const ballots = await factory.methods.getDeployedBallots().call();
-        setOngoingBallots(ballots);
-      }
-    };
     init();
   }, [factory]);
 
@@ -66,7 +70,7 @@ const Home = () => {
         </div>
         <Footer />
       </div>
-      <CreateBallotModal open={open} setOpen={setOpen} />
+      <CreateBallotModal open={open} setOpen={setOpen} init={() => init()} />
     </>
   );
 };

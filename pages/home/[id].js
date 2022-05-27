@@ -20,25 +20,25 @@ const Election = () => {
   const [open, setOpen] = useState(false);
   const [BallotInstance, setBallotInstance] = useState(null);
 
-  useEffect(() => {
-    const init = async () => {
-      if (web3 && account) {
-        if (router.query.id) {
-          setLoading(true);
-          //creating a instance of current ballot
-          var instance = new web3.eth.Contract(Ballot.abi, router.query.id);
-          setBallotInstance(instance);
-          //getting all the details of the ballot
-          let res = await getAllDetails(instance);
-          console.log(res);
-          setDetails(res);
-          if (account.toLowerCase() == res.manager.id.toLowerCase()) {
-            setIsManager(true);
-          }
-          setLoading(false);
+  const init = async () => {
+    if (web3 && account) {
+      if (router.query.id) {
+        setLoading(true);
+        //creating a instance of current ballot
+        var instance = new web3.eth.Contract(Ballot.abi, router.query.id);
+        setBallotInstance(instance);
+        //getting all the details of the ballot
+        let res = await getAllDetails(instance);
+        console.log(res);
+        setDetails(res);
+        if (account.toLowerCase() == res.manager.id.toLowerCase()) {
+          setIsManager(true);
         }
+        setLoading(false);
       }
-    };
+    }
+  };
+  useEffect(() => {
     init();
   }, [web3, router.query.id, account]);
 
@@ -243,6 +243,7 @@ const Election = () => {
         open={open}
         setOpen={setOpen}
         instance={BallotInstance}
+        init={() => init()}
       />
     </>
   );

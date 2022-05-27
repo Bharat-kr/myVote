@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useWeb3 } from "../../context/Web3Context";
 
-const CreateBallotModal = ({ open, setOpen }) => {
+const CreateBallotModal = ({ open, setOpen, init }) => {
   const { factory, account } = useWeb3();
   const [loading, setLoading] = useState(false);
+
+  //handler for creating ballot
   const handleCreateBallot = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -19,8 +21,10 @@ const CreateBallotModal = ({ open, setOpen }) => {
       });
     setLoading(false);
     setOpen(false);
+    await init();
     console.log("response", res);
   };
+
   return (
     <div className="w-full h-full">
       <div

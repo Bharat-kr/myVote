@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useWeb3 } from "../../context/Web3Context";
 
-const AddParticipantModal = ({ open, setOpen, instance }) => {
+const AddParticipantModal = ({ open, setOpen, instance, init }) => {
   const { web3, account } = useWeb3();
   const [loading, setLoading] = useState(false);
-  const handleCreateBallot = async (e) => {
+
+  //handler for adding a participant
+  const handleAddParticipant = async (e) => {
     e.preventDefault();
     console.log(e.target[0].value, e.target[1].value, e.target[2].value);
     setLoading(true);
@@ -20,8 +22,10 @@ const AddParticipantModal = ({ open, setOpen, instance }) => {
       });
     setLoading(false);
     setOpen(false);
+    await init();
     console.log("response", res);
   };
+
   return (
     <div className="w-full h-full">
       <div
@@ -67,7 +71,7 @@ const AddParticipantModal = ({ open, setOpen, instance }) => {
             </svg>
           </button>
         </div>
-        <form className="mt-5 w-full" onSubmit={handleCreateBallot}>
+        <form className="mt-5 w-full" onSubmit={handleAddParticipant}>
           <div>
             <label
               htmlFor="Name"

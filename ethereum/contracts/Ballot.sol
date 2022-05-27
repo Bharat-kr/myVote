@@ -59,7 +59,9 @@ contract Ballot{
     Vote[] VotesMap;
 
     //aadhar ids who have voted
-    mapping(string => bool) public votedPeoples;
+    mapping(string => bool) public votedPeoplesAadharId;
+    //wallet ids who have voted
+    mapping(string => bool) public votedPeoplesWalletId;
 
     //constructor function to make a manager 
     constructor(string memory creator ,address creatorId, string memory image , string memory nameOfBallot ,string memory desc){
@@ -101,7 +103,8 @@ contract Ballot{
 
     //function to vote a participant
     function vote(string memory name ,address participant , string memory aadhar) public payable canVote{
-        require(!votedPeoples[aadhar]  , "You have already Voted!");
+        require(!votedPeoplesAadharId[aadhar]  , "You have already Voted!");
+        require(!votedPeoplesWalletId[aadhar]  , "You have already Voted!");
         require(msg.value >= 0.005 ether , "Send at least 0.50 ether!");
 
         Vote memory val ;
@@ -117,7 +120,8 @@ contract Ballot{
                 break;
             }
         }
-        votedPeoples[aadhar] = true;
+        votedPeoplesAadharId[aadhar] = true;
+        votedPeoplesWalletId[aadhar] = true;
     }
 
     //to start voting in a ballot
