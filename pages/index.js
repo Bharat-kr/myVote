@@ -33,7 +33,7 @@ export default function Landing() {
 
   return (
     <>
-       <Head>
+      <Head>
         <title>MYVOTE</title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>

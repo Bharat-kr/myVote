@@ -10,12 +10,16 @@ const DetailsModal = ({ open, setOpen, instance, participant }) => {
     e.preventDefault();
     console.log(e.target[0].value, e.target[1].value, e.target[2].value);
     setLoading(true);
-    await instance.methods
-      .vote(e.target[0].value, participant.id, e.target[1].value)
-      .send({
-        from: account,
-        value: web3.utils.toWei("0.005", "ether"),
-      });
+    try {
+      await instance.methods
+        .vote(e.target[0].value, participant.id, e.target[1].value)
+        .send({
+          from: account,
+          value: web3.utils.toWei("0.005", "ether"),
+        });
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
     setOpen(false);
   };

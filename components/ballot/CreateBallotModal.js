@@ -9,16 +9,20 @@ const CreateBallotModal = ({ open, setOpen, init }) => {
   const handleCreateBallot = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const res = await factory.methods
-      .createBallot(
-        e.target[1].value, //name of creator
-        e.target[2].value, //Creator image
-        e.target[0].value, //name of ballot
-        e.target[3].value //ballot description
-      )
-      .send({
-        from: account,
-      });
+    try {
+      await factory.methods
+        .createBallot(
+          e.target[1].value, //name of creator
+          e.target[2].value, //Creator image
+          e.target[0].value, //name of ballot
+          e.target[3].value //ballot description
+        )
+        .send({
+          from: account,
+        });
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
     setOpen(false);
     await init();

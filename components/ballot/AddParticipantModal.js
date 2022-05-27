@@ -10,16 +10,20 @@ const AddParticipantModal = ({ open, setOpen, instance, init }) => {
     e.preventDefault();
     console.log(e.target[0].value, e.target[1].value, e.target[2].value);
     setLoading(true);
-    const res = await instance.methods
-      .addParticipant(
-        e.target[0].value, //name of participant
-        e.target[1].value, //hash id of participant
-        e.target[2].value //oarticipant image
-      )
-      .send({
-        from: account,
-        value: web3.utils.toWei("0.011", "ether"),
-      });
+    try {
+      await instance.methods
+        .addParticipant(
+          e.target[0].value, //name of participant
+          e.target[1].value, //hash id of participant
+          e.target[2].value //oarticipant image
+        )
+        .send({
+          from: account,
+          value: web3.utils.toWei("0.011", "ether"),
+        });
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
     setOpen(false);
     await init();

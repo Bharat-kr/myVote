@@ -22,7 +22,6 @@ const Home = () => {
 
   //fetching all ballots
   const init = async () => {
-    console.log("called");
     if (factory) {
       const ballots = await factory.methods.getDeployedBallots().call();
       setOngoingBallots(ballots);
