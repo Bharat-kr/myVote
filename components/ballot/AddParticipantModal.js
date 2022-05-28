@@ -20,6 +20,9 @@ const AddParticipantModal = ({ open, setOpen, instance, init }) => {
         .send({
           from: account,
           value: web3.utils.toWei("0.011", "ether"),
+        })
+        .on("transactionHash", function (hash) {
+          console.log(hash);
         });
     } catch (error) {
       console.log(error);
@@ -27,7 +30,6 @@ const AddParticipantModal = ({ open, setOpen, instance, init }) => {
     setLoading(false);
     setOpen(false);
     await init();
-    console.log("response", res);
   };
 
   return (

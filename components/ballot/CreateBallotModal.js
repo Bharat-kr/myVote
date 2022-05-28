@@ -19,6 +19,9 @@ const CreateBallotModal = ({ open, setOpen, init }) => {
         )
         .send({
           from: account,
+        })
+        .on("transactionHash", function (hash) {
+          console.log(hash);
         });
     } catch (error) {
       console.log(error);
@@ -26,7 +29,6 @@ const CreateBallotModal = ({ open, setOpen, init }) => {
     setLoading(false);
     setOpen(false);
     await init();
-    console.log("response", res);
   };
 
   return (
