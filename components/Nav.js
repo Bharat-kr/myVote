@@ -1,15 +1,28 @@
 import { useWeb3 } from "../context/Web3Context";
+import { useToasts } from "react-toast-notifications";
+
 const Nav = () => {
   const { connecting, setConnecting, setAccount } = useWeb3();
+  const { addToast } = useToasts();
 
   const getAccount = async (_event) => {
     setConnecting(true);
     try {
       const val = await ethereum.request({ method: "eth_requestAccounts" });
-      console.log(val);
-      setAccount(val[0]);
-    } catch (error) {}
-    setConnecting(false);
+      if (val.length > 0) {
+        setAccount(val[0]);
+        addToast("Account Found", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+      }
+    } catch (error) {
+      addToast(error.message, {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setConnecting(false);
+    }
   };
 
   return (

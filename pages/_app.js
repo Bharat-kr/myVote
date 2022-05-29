@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <ToastProvider
       autoDismiss
-      autoDismissTimeout={10000}
+      autoDismissTimeout={8000}
       placement="bottom-left"
     >
       <Web3Provider>

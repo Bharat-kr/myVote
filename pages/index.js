@@ -6,10 +6,12 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Loader from "../components/Loader";
 import Head from "next/head";
+import { useToasts } from "react-toast-notifications";
 
 export default function Landing() {
   const { connecting, setConnecting, account, setAccount } = useWeb3();
   const router = useRouter();
+  const { addToast } = useToasts();
 
   useEffect(() => {
     if (account !== "undefined" && account !== null) {
@@ -21,10 +23,20 @@ export default function Landing() {
     setConnecting(true);
     try {
       const val = await ethereum.request({ method: "eth_requestAccounts" });
-      console.log(val);
-      setAccount(val[0]);
-    } catch (error) {}
-    setConnecting(false);
+      if (val.length > 0) {
+        setAccount(val[0]);
+        addToast("Account Found", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+      }
+    } catch (error) {
+      addToast(error.message, {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setConnecting(false);
+    }
   };
 
   const handleAccountsChanged = (_accounts) => {

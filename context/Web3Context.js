@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import initWeb3 from "../ethereum/web3";
 import BallotFactory from "../ethereum/build/BallotFactory.json";
+import { useToasts } from "react-toast-notifications";
 
 const Web3Context = createContext();
 
@@ -12,6 +13,7 @@ export const Web3Provider = ({ children }) => {
   const [connecting, setConnecting] = useState(false);
   const [isRinkebyChain, setIsRinkebyChain] = useState(false);
   const [factory, setFactory] = useState(null);
+  const { addToast } = useToasts();
 
   useEffect(() => {
     let cancelled = false;
@@ -21,12 +23,26 @@ export const Web3Provider = ({ children }) => {
         if (!cancelled) {
           setDoneCheckingForMetaMask(false);
           const web3Instance = await initWeb3();
-          setWeb3(web3Instance);
+          if (web3Instance) {
+            setWeb3(web3Instance);
+          } else {
+            addToast("Please install Metamask!", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+          }
 
           // Transactions done in this app must be done on the Rinkeby test network.
-          const chainId = await ethereum.request({ method: "eth_chainId" });
-          if (chainId === "0x4") {
-            setIsRinkebyChain(true);
+          try {
+            const chainId = await ethereum.request({ method: "eth_chainId" });
+            if (chainId === "0x4") {
+              setIsRinkebyChain(true);
+            }
+          } catch (error) {
+            addToast(error.message, {
+              appearance: "error",
+              autoDismiss: true,
+            });
           }
 
           setDoneCheckingForMetaMask(true);
@@ -39,7 +55,7 @@ export const Web3Provider = ({ children }) => {
     return () => {
       cancelled = true;
     };
-  }, [connected]);
+  }, []);
 
   useEffect(() => {
     if (web3) {
@@ -53,13 +69,23 @@ export const Web3Provider = ({ children }) => {
 
   useEffect(() => {
     const init = async () => {
-      try {
-        const accounts = await ethereum.request({ method: "eth_accounts" });
-        if (accounts.length > 0 && ethereum.isConnected()) {
-          setAccount(accounts[0]);
+      if (doneCheckingForMetaMask && web3) {
+        try {
+          const accounts = await ethereum.request({ method: "eth_accounts" });
+          if (accounts.length > 0 && ethereum.isConnected()) {
+            setAccount(accounts[0]);
+            addToast("Account Found", {
+              appearance: "success",
+              autoDismiss: true,
+            });
+          }
+        } catch (error) {
+          console.error(error);
+          addToast(error.message, {
+            appearance: "error",
+            autoDismiss: true,
+          });
         }
-      } catch (error) {
-        console.error(error);
       }
     };
 
