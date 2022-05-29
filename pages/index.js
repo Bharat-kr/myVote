@@ -75,16 +75,20 @@ export default function Landing() {
             </svg>
           </div>
           <div className="w-full h-3/4 flex justify-between px-10">
-            <Image src={img} width={500} height={500} />
-            <div className="flex flex-col justify-center h-full items-end pr-10">
-              <h1 className="font-bold text-6xl text-primary mb-8">MYVOTE</h1>
-              <p className="font-thin text-2xl mb-8 text-right text-stone-600">
-                The safe and secure way to choose your leaders.
-                <br />A new approach to one most important things in
-                <br /> our lives with power of Blockchain!
+            <div className="hidden md:block w-2/3">
+              <Image src={img} width={500} height={500} />
+            </div>
+            <div className="flex flex-col justify-center h-full items-center md:items-end pr-0 md:pr-10">
+              <h1 className="font-bold text-5xl md:text-6xl text-center md:text-right text-primary mb-8">
+                MYVOTE
+              </h1>
+              <p className="font-thin text-xl md:text-2xl mb-8 text-center md:text-right text-stone-600">
+                The safe and secure way to choose your leaders. A new approach
+                to one most important things in our lives with power of
+                Blockchain!
               </p>
               <button
-                className="p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out z-50"
+                className="p-1 md:p-3 rounded-xl px-20 bg-primary font-bold text-lg text-white hover:shadow-lg transition ease-in-out z-50"
                 onClick={getAccount}
                 disabled={connecting}
               >
