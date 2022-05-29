@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useWeb3 } from "../../context/Web3Context";
 import { getDetails } from "../../utils/ballot";
 import Loader from "../Loader";
+import Link from "next/link";
 
 const BallotCard = ({ id }) => {
   const { web3 } = useWeb3();
@@ -22,7 +23,11 @@ const BallotCard = ({ id }) => {
   return (
     <div>
       <div className="max-w-md py-4 px-8 bg-white shadow-lg hover:shadow-md transition ease-in delay-50 rounded-lg my-12 mt-16">
-        {loading && <div className="p-4"><Loader/></div>}
+        {loading && (
+          <div className="p-4">
+            <Loader />
+          </div>
+        )}
         {!loading && (
           <>
             <div className="flex justify-center md:justify-start -mt-16">
@@ -35,15 +40,14 @@ const BallotCard = ({ id }) => {
               <h2 className="text-gray-800 text-3xl font-semibold">
                 {details?.name}
               </h2>
-              <p className="mt-2 text-gray-600 line-clamp-3">{details?.description}</p>
+              <p className="mt-2 text-gray-600 line-clamp-3">
+                {details?.description}
+              </p>
             </div>
             <div className="flex justify-end mt-4">
-              <a
-                href={`/home/${id}`}
-                className="text-xl font-medium text-primary"
-              >
-                View Details
-              </a>
+              <Link href="/details/[id]" as={`/details/${id}`}>
+                <a className="text-xl font-medium text-primary">View Details</a>
+              </Link>
             </div>
           </>
         )}

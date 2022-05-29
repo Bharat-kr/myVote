@@ -55,7 +55,7 @@ export const Web3Provider = ({ children }) => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [connected]);
 
   useEffect(() => {
     if (web3) {
@@ -69,28 +69,26 @@ export const Web3Provider = ({ children }) => {
 
   useEffect(() => {
     const init = async () => {
-      if (doneCheckingForMetaMask && web3) {
-        try {
-          const accounts = await ethereum.request({ method: "eth_accounts" });
-          if (accounts.length > 0 && ethereum.isConnected()) {
-            setAccount(accounts[0]);
-            addToast("Account Found", {
-              appearance: "success",
-              autoDismiss: true,
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          addToast(error.message, {
-            appearance: "error",
+      try {
+        const accounts = await ethereum.request({ method: "eth_accounts" });
+        if (accounts.length > 0 && ethereum.isConnected()) {
+          setAccount(accounts[0]);
+          addToast("Account Found", {
+            appearance: "success",
             autoDismiss: true,
           });
         }
+      } catch (error) {
+        console.error(error);
+        addToast(error.message, {
+          appearance: "error",
+          autoDismiss: true,
+        });
       }
     };
 
     init();
-  }, []);
+  }, [connected]);
 
   return (
     <Web3Context.Provider
