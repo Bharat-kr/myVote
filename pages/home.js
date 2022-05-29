@@ -38,7 +38,7 @@ const Home = () => {
           <title>MYVOTE</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
-        <NavBar />
+        <NavBar init={() => init()} />
         <div className="w-11/12 shadow-2xl mb-6 rounded-b-xl">
           <div className="px-10 pt-4 flex items-center justify-between w-full">
             <div className="text-Poppins font-normal text-2xl">

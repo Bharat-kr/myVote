@@ -74,12 +74,12 @@ contract Ballot{
     }
 
     modifier onlyManager(){
-        require(msg.sender == manager.id);
+        require(msg.sender == manager.id, "Only manager can change this!");
         _;
     }
 
     modifier canVote(){
-        require(votingStarted && !votingFinished);
+        require(votingStarted && !votingFinished , "Voting not started Yet!");
         _;
     }
 

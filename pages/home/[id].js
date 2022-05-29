@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Participant from "../../components/ballot/Participant";
@@ -7,8 +8,8 @@ import { useWeb3 } from "../../context/Web3Context";
 import { getAllDetails } from "../../utils/ballot";
 import Ballot from "../../ethereum/build/Ballot.json";
 import Loader from "../../components/Loader";
-import Head from "next/head";
 import AddParticipantModal from "../../components/ballot/AddParticipantModal";
+import { useToasts } from "react-toast-notifications";
 
 const Election = () => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const Election = () => {
   const [isManager, setIsManager] = useState(false);
   const [open, setOpen] = useState(false);
   const [BallotInstance, setBallotInstance] = useState(null);
+  const { addToast } = useToasts();
 
   const init = async () => {
     if (web3 && account) {
@@ -45,9 +47,24 @@ const Election = () => {
   //Start voting for a ballot
   const startVoting = async () => {
     setButtonLoader(true);
-    await BallotInstance.methods.startVoting().send({
-      from: account,
-    });
+    try {
+      await BallotInstance.methods
+        .startVoting()
+        .send({
+          from: account,
+        })
+        .on("receipt", function (receipt) {
+          addToast(`Transaction completed. ${receipt.transactionHash}`, {
+            appearance: "success",
+            autoDismiss: true,
+          });
+        });
+    } catch (error) {
+      addToast(error.message, {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
     let res = await getAllDetails(BallotInstance);
     setDetails(res);
     setButtonLoader(false);
@@ -56,9 +73,25 @@ const Election = () => {
   //end voting for a ballot
   const endVoting = async () => {
     setButtonLoader(true);
-    await BallotInstance.methods.finishVoting().send({
-      from: account,
-    });
+
+    try {
+      await BallotInstance.methods
+        .finishVoting()
+        .send({
+          from: account,
+        })
+        .on("transactionHash", function (hash) {
+          addToast(`Transaction completed. ${hash} `, {
+            appearance: "success",
+            autoDismiss: true,
+          });
+        });
+    } catch (error) {
+      addToast(error.message, {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
     let res = await getAllDetails(BallotInstance);
     setDetails(res);
     setButtonLoader(false);

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useWeb3 } from "../../context/Web3Context";
+import { useToasts } from "react-toast-notifications";
 
 const AddParticipantModal = ({ open, setOpen, instance, init }) => {
   const { web3, account } = useWeb3();
   const [loading, setLoading] = useState(false);
+  const { addToast } = useToasts();
 
   //handler for adding a participant
   const handleAddParticipant = async (e) => {
@@ -21,11 +23,17 @@ const AddParticipantModal = ({ open, setOpen, instance, init }) => {
           from: account,
           value: web3.utils.toWei("0.011", "ether"),
         })
-        .on("transactionHash", function (hash) {
-          console.log(hash);
+        .on('receipt', function (receipt){
+          addToast(`Transaction completed. ${receipt.transactionHash}`, {
+            appearance: "success",
+            autoDismiss: true,
+          });
         });
     } catch (error) {
-      console.log(error);
+      addToast(error.message, {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
     setLoading(false);
     setOpen(false);

@@ -2,7 +2,7 @@ import { useWeb3 } from "../../context/Web3Context";
 import CreateBallotModal from "../ballot/CreateBallotModal";
 import { useState } from "react";
 
-const NavBar = () => {
+const NavBar = ({init}) => {
   const { account } = useWeb3();
   const [open, setOpen] = useState(false);
 
@@ -47,7 +47,7 @@ const NavBar = () => {
           </button>
         </li>
       </nav>
-      <CreateBallotModal open={open} setOpen={setOpen} />
+      <CreateBallotModal open={open} setOpen={setOpen} init={() => init()} />
     </>
   );
 };

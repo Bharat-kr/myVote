@@ -1,11 +1,18 @@
 import { Web3Provider } from "../context/Web3Context";
+import { ToastProvider } from "react-toast-notifications";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Web3Provider>
-      <Component {...pageProps} />
-    </Web3Provider>
+    <ToastProvider
+      autoDismiss
+      autoDismissTimeout={10000}
+      placement="bottom-left"
+    >
+      <Web3Provider>
+        <Component {...pageProps} />
+      </Web3Provider>
+    </ToastProvider>
   );
 }
 
